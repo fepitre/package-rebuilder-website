@@ -1,0 +1,26 @@
+{
+  "name": "package-rebuilder-website",
+  "version": "0.0.1",
+  "description": "Package Rebuilder Status Website",
+  "author": "Frédéric Pierret",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+    "@babel/plugin-transform-react-jsx": "^7.12.11",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babelify": "^10.0.0",
+    "budo": "^11.6.3",
+    "bulma": "0.9",
+    "prop-types": "^15.5.8",
+    "react": "^17.0.1",
+    "react-collapsible": "^2.8.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.3.0",
+    "terser": "^5.5.1"
+  },
+  "browserslist": "> 0.25%, not dead"
+}

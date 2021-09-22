@@ -1,0 +1,8 @@
+http://localhost:8881
+
+log
+
+encode gzip
+
+reverse_proxy 127.0.0.1:9966
+reverse_proxy /livereload 127.0.0.1:9966

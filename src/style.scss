@@ -1,0 +1,174 @@
+@charset "utf-8";
+
+$hero-body-padding: 1.5rem 2rem;
+$box-padding: 5px 10px 10px 10px;
+
+$archlinux-blue: #08c !default;
+$archlinux-blue-light1: #f6f9fc !default;
+$archlinux-blue-light2: #ecf2f5 !default;
+
+$qubes-blue: #63a0ff !default;
+$light-blue: #99bfff !default;
+
+$primary: $archlinux-blue-light1 !default;
+$link: $archlinux-blue !default;
+$link-hover: #363636 !default;
+
+$scheme-main: $primary !default;
+$body-background-color: $primary !default;
+
+$footer-background-color: $primary !default;
+$footer-padding: 1rem 1.5rem 1rem;
+
+a:hover {
+	text-decoration: underline;
+}
+
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/helpers/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/box.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/layout/footer.sass";
+@import "../node_modules/bulma/sass/layout/hero.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
+@import "../node_modules/bulma/sass/grid/tiles.sass";
+
+.has-background-info {
+	background-color: #e4eeff !important;
+}
+
+.has-background-info2 {
+	background-color: $archlinux-blue-light2 !important;
+}
+
+.reproducible {
+	color: forestgreen;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: forestgreen;
+	}
+}
+
+.unreproducible {
+	color: goldenrod;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: goldenrod;
+	}
+}
+
+.failure {
+	color: firebrick;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: firebrick;
+	}
+}
+
+.retry {
+	color: orangered;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: orangered;
+	}
+}
+
+.pending {
+	color: grey;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: grey;
+	}
+}
+
+.running {
+	color: dodgerblue;
+
+	& .subtitle:before, & .Collapsible__trigger {
+		color: dodgerblue;
+	}
+}
+
+.section {
+	padding: 2rem;
+
+	& ul {
+		@include tablet {
+			columns: 2;
+		}
+
+		@include desktop {
+			columns: 4;
+		}
+
+		/* bulma has no 4k option */
+		@media (min-width: 2000px) {
+			columns: 8;
+		}
+	}
+}
+
+.repo-summary li:nth-child(2) {
+	padding-top: 0.5rem;
+}
+
+.subtitle {
+	&:before {
+		content: '● ';
+	}
+}
+
+.Collapsible__contentInner {
+	margin-left: 1rem;
+}
+
+.Collapsible__trigger {
+	display: block;
+	position: relative;
+	padding: 0 0 0 1rem;
+	color: $link;
+
+	&:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	&:before {
+		content: '^';
+		position: absolute;
+		left: 0;
+		display: block;
+		transition: transform 100ms;
+		color: #666;
+		font-weight: bold;
+	}
+
+	&.is-closed {
+		&:before {
+			transform: rotateZ(90deg);
+		}
+	}
+
+	&.is-open {
+		&:before {
+			transform: rotateZ(180deg);
+		}
+	}
+}
+
+.icon {
+	opacity: 0.6;
+	width: 0.8rem;
+	height: 0.8rem;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}

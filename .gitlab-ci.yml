@@ -1,0 +1,9 @@
+image: "fedora:latest"
+
+dist:
+  script:
+    - dnf -y install caddy tmux yarnpkg rubygem-sass nodejs
+    - make
+
+    include:
+  - template: Dependency-Scanning.gitlab-ci.yml
