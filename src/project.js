@@ -88,7 +88,7 @@ class Architecture extends React.Component {
 class PackageSetSection extends React.Component {
   render() {
     const { project, distribution, architecture, package_set, status } = this.props;
-    const known_status = ['reproducible', 'unreproducible', 'failure', 'retry', 'running'];
+    const known_status = ['reproducible', 'unreproducible', 'failure', 'retry', 'pending', 'running'];
     let total = 0;
     for (let s of known_status) {
       if (s in status) {
@@ -104,6 +104,7 @@ class PackageSetSection extends React.Component {
             {status.unreproducible && status.unreproducible.length > 0 && <StatusSection label="unreproducible" project={project} pkgs={status.unreproducible} />}
             {status.failure && status.failure.length > 0 && <StatusSection label="failure" project={project} pkgs={status.failure} />}
             {status.retry && status.retry.length > 0 && <StatusSection label="retry" project={project} pkgs={status.retry} />}
+            {status.pending && status.pending.length > 0 && <StatusSection label="pending" project={project} pkgs={status.pending} />}
             {status.running && status.running.length > 0 && <StatusSection label="running" project={project} pkgs={status.running} />}
           </Collapsible>
         </div>
