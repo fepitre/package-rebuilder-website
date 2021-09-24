@@ -15,20 +15,22 @@ import { Project } from './project';
 
 function ProjectsList() {
     return (
-        <div className="box tile has-text-centered has-background-info">
-            <a href="/qubesos.html">
-                <div className="section pt-4 pb-4">
-                    <h2>Qubes OS</h2>
-                    <img width="50" src="/images/qubesos.svg" />
-                </div>
-            </a>
-            <div className="section pt-4 pb-4">
-                <a href="/debian.html">
-                    <h2>Debian</h2>
-                    <img width="50" src="/images/debian-nd.svg" />
+        <section className="section pt-4 pb-4">
+            <div className="box tile has-text-centered has-background-info">
+                <a href="/qubesos.html">
+                    <div className="section pt-4 pb-4">
+                        <h2>Qubes OS</h2>
+                        <img width="50" src="/images/qubesos.svg" />
+                    </div>
                 </a>
+                <div className="section pt-4 pb-4">
+                    <a href="/debian.html">
+                        <h2>Debian</h2>
+                        <img width="50" src="/images/debian-nd.svg" />
+                    </a>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 
@@ -42,7 +44,6 @@ function Header() {
                 <br />
                 <p>This page shows the results of verification builds of official distribution packages in the repositories in an effort to be fully reproducible.
                     For more information read the <a href="https://reproducible-builds.org/">Reproducible Builds</a> website.</p>
-                <br />
             </div>
         </div>
     )
