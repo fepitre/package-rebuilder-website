@@ -92,7 +92,7 @@ a:hover {
 }
 
 .section {
-	padding: 2rem;
+	padding: 1rem;
 
 	& ul {
 		@include tablet {
@@ -171,4 +171,22 @@ a:hover {
 	-moz-user-select: none; /* Old versions of Firefox */
 	-ms-user-select: none; /* Internet Explorer/Edge */
 	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.panel {
+	padding: 1rem;
+	& ul {
+		@include tablet {
+			columns: 1;
+		}
+
+		@include desktop {
+			columns: 2;
+		}
+
+		/* bulma has no 4k option */
+		@media (min-width: 2000px) {
+			columns: 4;
+		}
+	}
 }

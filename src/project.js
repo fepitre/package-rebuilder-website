@@ -36,8 +36,8 @@ function StatusSection(props) {
         let links = '';
         let build_log_url = `/${props.project}/results/${pkg.log}`;
         let diffoscope_url = ``;
-        links = <span className="noselect"> <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a></span>;
-        return <li key={pkg.name}><p className="subtitle is-6"><a href={url}>{pkg.name} {pkg.version}</a>{links}</p></li>
+        links = <span className="noselect"> {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.has_diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
+        return <li key={Math.random()}><p className="subtitle is-6"><a href={url}>{pkg.name} {pkg.version}</a>{links}</p></li>
       })}
     </ul>
   );
@@ -57,29 +57,95 @@ class Body extends React.Component {
     const { fetchFailed, project, distributions } = this.props;
     return (
       <React.Fragment>
-        {!fetchFailed && !distributions &&
-          <section className="section">
-            <p><b>Loading packages...</b></p>
-          </section>
-        }
-        {fetchFailed &&
-          <section className="section">
-            <div className="tile box has-background-danger">
-              <div className="content has-text-centered">
-                <p className='title is-5 has-text-white'>An unexpected error occurred fetching the rebuild status</p>
+        {
+          <section className="section pl-8 pr-8 pt-4 pb-4">
+            <br /><br />
+            <div className="box content has-background-info2">
+              <div className="content has-text-centered title is-3">
+                {/* Main project title */}
+                <h2><strong><CapitalizeProject project={project} /></strong></h2>
               </div>
+              {!fetchFailed && !distributions &&
+                <section className="section pl-8 pr-8 pt-4 pb-4">
+                  <p><b>Loading packages...</b></p>
+                </section>
+              }
+              {fetchFailed &&
+                <section className="section pl-8 pr-8 pt-4 pb-4">
+                  <div className="tile box has-background-danger">
+                    <div className="content has-text-centered">
+                      <p className='title is-5 has-text-white'>An unexpected error occurred fetching the rebuild status</p>
+                    </div>
+                  </div>
+                </section>
+              }
+              {/* Add list of links to sections */}
+              {
+                Object.keys(distributions).map(distribution =>
+                  <div key={`${project}-${distribution}-summary`}>
+                    {
+                      Object.keys(distributions[distribution]).map(architecture =>
+                        <div key={`${project}-${distribution}-${architecture}-link`}>
+                          <p><a href={`#${project}-${distribution}-${architecture}`}>
+                            <CapitalizeProject project={project} /> {distribution} ({architecture})
+                          </a></p>
+                        </div>
+                      )
+                    }
+                  </div>
+                )
+              }
             </div>
           </section>
         }
-
         {
-          <ProjectSummary project={project} distributions={distributions} />
-        }
-
-        {
-          Object.keys(distributions).map(name =>
-            <div key={`${project}-${name}`} className="section pt-4 pb-4" id={`${project}-${name}`}>
-              <Distribution project={project} distribution={name} architectures={distributions[name]} />
+          Object.keys(distributions).map(distribution =>
+            <div key={`${project}-${distribution}`} className="section pl-8 pr-8 pt-4 pb-4" id={`${project}-${distribution}`}>
+              <div className="box content has-background-info2">
+                {/* Create box per project distributions */}
+                {
+                  Object.keys(distributions[distribution]).map(architecture =>
+                    <section key={`${project}-${distribution}-${architecture}`} className="section pl-1 pr-1 pt-4 pb-4" id={`${project}-${distribution}-${architecture}`}>
+                      {/* Create packages set status section per architecture */}
+                      <div className="content has-text-centered title is-4">
+                        <h2>{distribution} ({architecture})</h2>
+                      </div>
+                      {/* Include all pie charts available for every package sets */}
+                      <div className="panel">
+                        <ul>
+                          {
+                            Object.keys(distributions[distribution][architecture]).map(name =>
+                              <div key={`${project}-${distribution}-${architecture}-${name}-img`}>
+                                <li>
+                                  <img
+                                    key={`${project}-${distribution}-${architecture}-${name}-img`}
+                                    className="section pl-1 pr-1 pt-4 pb-4"
+                                    src={`/${project}/results/${distribution}_${name}.${architecture}.png`}
+                                  />
+                                </li>
+                              </div>
+                            )
+                          }
+                        </ul>
+                      </div>
+                      {/* Status section per package set */}
+                      {
+                        Object.keys(distributions[distribution][architecture]).map(name =>
+                          <div key={`${project}-${distribution}-${architecture}-${name}`}>
+                            <PackageSetSection
+                              project={project}
+                              distribution={distribution}
+                              architecture={architecture}
+                              package_set={name}
+                              status={distributions[distribution][architecture][name]}
+                            />
+                          </div>
+                        )
+                      }
+                    </section>
+                  )
+                }
+              </div>
             </div>
           )
         }
@@ -88,74 +154,6 @@ class Body extends React.Component {
   }
 }
 
-class ProjectSummary extends React.Component {
-  render() {
-    const { project, distributions } = this.props;
-    return (
-      <section className="section pt-4 pb-4">
-        <br/>        <br/>
-        <div className="box content has-background-info2">
-          <div className="content has-text-centered title is-3">
-            <h2><strong><CapitalizeProject project={project}/></strong></h2>
-          </div>
-          {
-            Object.keys(distributions).map(distribution =>
-              Object.keys(distributions[distribution]).map(architecture =>
-                <div>
-                  <a key={`${project}-${distribution}-${architecture}`} href={`#${project}-${distribution}-${architecture}`}><CapitalizeProject project={project}/> {distribution} ({architecture})</a>
-                </div>
-              )
-            )
-          }
-        </div>
-      </section>
-    )
-  }
-}
-
-class Distribution extends React.Component {
-  render() {
-    const { project, distribution, architectures } = this.props;
-    let key = `${project}-${distribution}`;
-    return (
-      <div className="box content has-background-info2">
-        {
-          Object.keys(architectures).map(name =>
-            <div key={`${key}-${name}`} className="section pt-4 pb-4" id={`${key}-${name}`}>
-              <Architecture project={project} distribution={distribution} architecture={name} package_sets={architectures[name]} />
-            </div>
-          )
-        }
-      </div>
-    )
-  }
-}
-
-class Architecture extends React.Component {
-  render() {
-    const { project, distribution, architecture, package_sets } = this.props;
-    const key = `${project}-${distribution}-${architecture}`;
-    return (
-      <section key={key} className="section pt-4 pb-4" id={key}>
-        <div className="content has-text-centered title is-4">
-          <h2>{distribution} ({architecture})</h2>
-        </div>
-        {
-          Object.keys(package_sets).map(name =>
-            <img key={`${key}-${name}-img`} className="section pt-4 pb-4" style={{ height: 400 }} src={`/${project}/results/${distribution}_${name}.${architecture}.png`} />
-          )
-        }
-        {
-          Object.keys(package_sets).map(name =>
-            <div key={`${key}-${name}`} className="section pt-4 pb-4" id={`${key}-${name}`}>
-              <PackageSetSection project={project} distribution={distribution} architecture={architecture} package_set={name} status={package_sets[name]} />
-            </div>
-          )
-        }
-      </section>
-    )
-  }
-}
 
 class PackageSetSection extends React.Component {
   render() {
@@ -167,17 +165,20 @@ class PackageSetSection extends React.Component {
         total += status[s].length
       }
     }
+    let key = `${project}-${distribution}-${architecture}-${package_set}`;
     return (
-      <div className="tile box has-background-info">
-        <Collapsible trigger={`${package_set} (${architecture})`} open>
-          {status.reproducible && status.reproducible.length > 0 && <StatusSection label="reproducible" project={project} pkgs={status.reproducible} />}
-          {status.unreproducible && status.unreproducible.length > 0 && <StatusSection label="unreproducible" project={project} pkgs={status.unreproducible} />}
-          {status.failure && status.failure.length > 0 && <StatusSection label="failure" project={project} pkgs={status.failure} />}
-          {status.retry && status.retry.length > 0 && <StatusSection label="retry" project={project} pkgs={status.retry} />}
-          {status.pending && status.pending.length > 0 && <StatusSection label="pending" project={project} pkgs={status.pending} />}
-          {status.running && status.running.length > 0 && <StatusSection label="running" project={project} pkgs={status.running} />}
-        </Collapsible>
-      </div>
+      <section key={key} id={key} className="section pl-1 pr-1 pt-4 pb-4">
+        <div className="tile box has-background-info">
+          <Collapsible trigger={`${package_set} (${architecture})`} open>
+            {status.reproducible && status.reproducible.length > 0 && <StatusSection label="reproducible" project={project} pkgs={status.reproducible} />}
+            {status.unreproducible && status.unreproducible.length > 0 && <StatusSection label="unreproducible" project={project} pkgs={status.unreproducible} />}
+            {status.failure && status.failure.length > 0 && <StatusSection label="failure" project={project} pkgs={status.failure} open/>}
+            {status.retry && status.retry.length > 0 && <StatusSection label="retry" project={project} pkgs={status.retry} open/>}
+            {status.running && status.running.length > 0 && <StatusSection label="running" project={project} pkgs={status.running} />}
+            {status.pending && status.pending.length > 0 && <StatusSection label="pending" project={project} pkgs={status.pending} />}
+          </Collapsible>
+        </div>
+      </section>
     )
   }
 }
@@ -216,7 +217,7 @@ class Project extends React.Component {
     if (!isLoaded) {
       return (
         <React.Fragment>
-          <section className="section">
+          <section className="section pl-8 pr-8 pt-4 pb-4">
             <div className="tile box has-background-info2">
               <div className="content has-text-centered">
                 <p>Loading packages...</p>
