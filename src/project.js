@@ -34,9 +34,10 @@ function StatusSection(props) {
           url = `https://snapshot.notset.fr/mr/package/${pkg.name}`;
         }
         let links = '';
-        let build_log_url = `/${props.project}/results/${pkg.log}`;
+        let build_log_url = `${pkg.log}`.replace('/rebuild', '');
+        let metadata_url = `${pkg.metadata}`.replace('/rebuild', '');
         let diffoscope_url = ``;
-        links = <span className="noselect"> {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.has_diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
+        links = <span className="noselect"> {pkg.metadata && <a href={metadata_url} title="in-toto metadata"><img src="icons/in-toto-16.svg" className="icon" /></a>} {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.has_diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
         return <li key={Math.random()}><p className="subtitle is-6"><a href={url}>{pkg.name} {pkg.version}</a>{links}</p></li>
       })}
     </ul>
