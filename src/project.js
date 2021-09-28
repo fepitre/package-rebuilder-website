@@ -171,12 +171,18 @@ class PackageSetSection extends React.Component {
       <section key={key} id={key} className="section pl-1 pr-1 pt-4 pb-4">
         <div className="tile box has-background-info">
           <Collapsible trigger={`${package_set} (${architecture})`} open>
-            {status.reproducible && status.reproducible.length > 0 && <StatusSection label="reproducible" project={project} pkgs={status.reproducible} />}
-            {status.unreproducible && status.unreproducible.length > 0 && <StatusSection label="unreproducible" project={project} pkgs={status.unreproducible} />}
-            {status.failure && status.failure.length > 0 && <StatusSection label="failure" project={project} pkgs={status.failure} open/>}
-            {status.retry && status.retry.length > 0 && <StatusSection label="retry" project={project} pkgs={status.retry} open/>}
-            {status.running && status.running.length > 0 && <StatusSection label="running" project={project} open pkgs={status.running} />}
-            {status.pending && status.pending.length > 0 && <StatusSection label="pending" project={project} pkgs={status.pending} />}
+            {status.reproducible && status.reproducible.length > 0 &&
+              <StatusSection label="reproducible" project={project} pkgs={status.reproducible} />}
+            {status.unreproducible && status.unreproducible.length > 0 &&
+              <StatusSection label="unreproducible" project={project} open={status.unreproducible.length < 1000} pkgs={status.unreproducible} />}
+            {status.failure && status.failure.length > 0 &&
+              <StatusSection label="failure" project={project} pkgs={status.failure} open/>}
+            {status.retry && status.retry.length > 0 &&
+              <StatusSection label="retry" project={project} pkgs={status.retry} open/>}
+            {status.running && status.running.length > 0 &&
+              <StatusSection label="running" project={project} open pkgs={status.running} />}
+            {status.pending && status.pending.length > 0 &&
+              <StatusSection label="pending" project={project} pkgs={status.pending} />}
           </Collapsible>
         </div>
       </section>
