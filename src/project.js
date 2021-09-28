@@ -175,7 +175,7 @@ class PackageSetSection extends React.Component {
             {status.unreproducible && status.unreproducible.length > 0 && <StatusSection label="unreproducible" project={project} pkgs={status.unreproducible} />}
             {status.failure && status.failure.length > 0 && <StatusSection label="failure" project={project} pkgs={status.failure} open/>}
             {status.retry && status.retry.length > 0 && <StatusSection label="retry" project={project} pkgs={status.retry} open/>}
-            {status.running && status.running.length > 0 && <StatusSection label="running" project={project} pkgs={status.running} />}
+            {status.running && status.running.length > 0 && <StatusSection label="running" project={project} open pkgs={status.running} />}
             {status.pending && status.pending.length > 0 && <StatusSection label="pending" project={project} pkgs={status.pending} />}
           </Collapsible>
         </div>
