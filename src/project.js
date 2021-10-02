@@ -35,9 +35,10 @@ function StatusSection(props) {
         }
         let links = '';
         let build_log_url = `${pkg.log}`.replace('/rebuild', '');
-        let metadata_url = `${pkg.metadata}`.replace('/rebuild', '');
+        let metadata_url = `${pkg.metadata.reproducible}`.replace('/rebuild', '');
+        let metadata_unrepr_url = `${pkg.metadata.unreproducible}`.replace('/rebuild', '');
         let diffoscope_url = `${pkg.diffoscope}`.replace('/rebuild', '');
-        links = <span className="noselect"> {pkg.metadata && <a href={metadata_url} title="in-toto metadata"><img src="icons/in-toto-16.svg" className="icon" /></a>} {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
+        links = <span className="noselect"> {pkg.metadata.reproducible && <a href={metadata_url} title="in-toto metadata"><img src="icons/in-toto-16.svg" className="icon" /></a>} {pkg.metadata.unreproducible && <a href={metadata_unrepr_url} title="in-toto unreproducible metadata"><img src="icons/in-toto-black-16.svg" className="icon" /></a>} {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
         return <li key={Math.random()}><p className="subtitle is-6"><a href={url}>{pkg.name} {pkg.version}</a>{links}</p></li>
       })}
     </ul>
