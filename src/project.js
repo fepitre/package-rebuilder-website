@@ -34,14 +34,14 @@ function StatusSection(props) {
           url = `https://snapshot.notset.fr/mr/package/${pkg.name}`;
         }
         let links = '';
-        let build_log_url = `${pkg.log}`.replace('/rebuild', '');
+        let build_log_url = `${pkg.log}`;
         let metadata_url = ``;
         let metadata_unrepr_url = ``;
         if (pkg.metadata) {
-          metadata_url = `${pkg.metadata.reproducible}`.replace('/rebuild', '');
-          metadata_unrepr_url = `${pkg.metadata.unreproducible}`.replace('/rebuild', '');
+          metadata_url = `${pkg.metadata.reproducible}`;
+          metadata_unrepr_url = `${pkg.metadata.unreproducible}`;
         }
-        let diffoscope_url = `${pkg.diffoscope}`.replace('/rebuild', '');
+        let diffoscope_url = `${pkg.diffoscope}`;
         links = <span className="noselect"> {pkg.metadata && pkg.metadata.reproducible && <a href={metadata_url} title="in-toto metadata"><img src="icons/in-toto-16.svg" className="icon" /></a>} {pkg.metadata && pkg.metadata.unreproducible && <a href={metadata_unrepr_url} title="in-toto unreproducible metadata"><img src="icons/in-toto-black-16.svg" className="icon" /></a>} {pkg.log && <a href={build_log_url} title="build log"><img src="icons/note-16.svg" className="icon" /></a>} {pkg.diffoscope && <a href={diffoscope_url} title="diffoscope"><img src="icons/search-16.svg" className="icon" /></a>}</span>;
         return <li key={Math.random()}><p className="subtitle is-6"><a href={url}>{pkg.name} {pkg.version}</a>{links}</p></li>
       })}
