@@ -14,6 +14,9 @@ LOGO = reproducible_builds.svg
 
 all: vendor
 
+install-deps:
+	sudo dnf install -y caddy tmux yarnpkg rubygem-sass nodejs
+
 # Watchers
 
 .PHONY: sass-watcher

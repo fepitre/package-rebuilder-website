@@ -179,11 +179,11 @@ class PackageSetSection extends React.Component {
             {status.reproducible && status.reproducible.length > 0 &&
               <StatusSection label="reproducible" project={project} pkgs={status.reproducible} />}
             {status.unreproducible && status.unreproducible.length > 0 &&
-              <StatusSection label="unreproducible" project={project} open={status.unreproducible.length < 1000} pkgs={status.unreproducible} />}
+              <StatusSection label="unreproducible" project={project} open={status.unreproducible.length < 100} pkgs={status.unreproducible} />}
             {status.failure && status.failure.length > 0 &&
               <StatusSection label="failure" project={project} pkgs={status.failure} open/>}
             {status.retry && status.retry.length > 0 &&
-              <StatusSection label="retry" project={project} pkgs={status.retry} open/>}
+              <StatusSection label="retry" project={project} pkgs={status.retry} />}
             {status.running && status.running.length > 0 &&
               <StatusSection label="running" project={project} open pkgs={status.running} />}
             {status.pending && status.pending.length > 0 &&
