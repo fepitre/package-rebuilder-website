@@ -43,7 +43,7 @@ function Header() {
                 <p>Welcome to the <a href="https://github.com/fepitre/package-rebuilder">PackageRebuilder</a> instance hosted by <a href="https://github.com/fepitre">Frédéric Pierret</a>.</p>
                 <br />
                 <p>This page shows the results of verification builds of official distribution packages in the repositories in an effort to be fully reproducible.
-                    For more information read the <a href="https://reproducible-builds.org/">Reproducible Builds</a> website.</p>
+                    For more information read the <a href="https://reproducible-builds.org/">Reproducible Builds</a> website and the announcement <a href="https://www.qubes-os.org/news/2021/10/08/reproducible-builds-for-debian-a-big-step-forward/">Reproducible builds for Debian: a big step forward</a>.</p>
             </div>
         </div>
     )
