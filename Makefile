@@ -33,7 +33,7 @@ js-watcher: vendor
 .PHONY: dist
 dist: vendor
 	@mkdir -p "dist/${PACKAGE_NAME}-${VERSION}"
-	cp -avf public/index.html public/qubesos.html public/debian.html dist/${PACKAGE_NAME}-${VERSION}/
+	cp -avf public/index.html public/qubesos.html public/debian_*.html dist/${PACKAGE_NAME}-${VERSION}/
 	cp -rvf public/icons -t dist/${PACKAGE_NAME}-${VERSION}/
 	cp -rvf public/images -t dist/${PACKAGE_NAME}-${VERSION}/
 	cp -vf public/favicon.png -t dist/${PACKAGE_NAME}-${VERSION}/

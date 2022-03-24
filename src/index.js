@@ -24,8 +24,20 @@ function ProjectsList() {
                     </div>
                 </a>
                 <div className="section pt-4 pb-4">
-                    <a href="/debian.html">
-                        <h2>Debian</h2>
+                    <a href="/debian_bullseye.html">
+                        <h2>Debian Bullseye</h2>
+                        <img width="50" src="/images/debian-nd.svg" />
+                    </a>
+                </div>
+                <div className="section pt-4 pb-4">
+                    <a href="/debian_bookworm.html">
+                        <h2>Debian Bookworm</h2>
+                        <img width="50" src="/images/debian-nd.svg" />
+                    </a>
+                </div>
+                <div className="section pt-4 pb-4">
+                    <a href="/debian_sid.html">
+                        <h2>Debian Sid</h2>
                         <img width="50" src="/images/debian-nd.svg" />
                     </a>
                 </div>
@@ -65,12 +77,19 @@ function Footer() {
 }
 
 function Body() {
-    const project = window.location.pathname.slice(1).replace('.html', '');
+    const fullproject = window.location.pathname.slice(1).replace('.html', '');
+    const split_fullproject = fullproject.split('_');
+    var project = "";
+    var dist = "";
+    if (split_fullproject.length>1) {
+        project = split_fullproject[0];
+        dist = split_fullproject[1];
+    }
     return (
         <React.Fragment>
             <Header />
             <ProjectsList />
-            {project && ["qubesos", "debian"].indexOf(project) > -1 && <Project project={project} />}
+            {project && ["qubesos", "debian", "debian", "debian"].indexOf(project) > -1 && <Project project={project} dist={dist} />}
             <Footer />
         </React.Fragment>
     )

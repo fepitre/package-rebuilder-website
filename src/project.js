@@ -203,12 +203,20 @@ class Project extends React.Component {
       fetchFailed: false,
       isLoaded: false,
       project: props.project,
+      dist: props.dist,
       distributions: {}
     };
   }
 
   componentDidMount() {
-    const url = `/${this.state.project}/results/${this.state.project}.json`;
+    console.error(this.state.dist);
+    var url = `/${this.state.project}/results/${this.state.project}.json`;
+    if (this.state.dist) {
+      if (this.state.dist == "sid") {
+        this.state.dist = "unstable";
+      }
+      url = `/${this.state.project}/results/${this.state.project}_${this.state.dist}.json`;
+    }
 
     fetch(url).then((response) => {
       if (!response.ok) {
